@@ -1,0 +1,13 @@
+# Mixed file — some bad lines
+Alice, 32
+BadLineNoComma
+smith, 48
+Bob, seventy
+Charlie, 85.5
+sam smith,23
+, 77
+Dipa K., 105
+Evan, 61
+Frank, 88
+# blank line below:
+Smith, 77

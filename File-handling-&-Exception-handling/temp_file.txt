@@ -1,0 +1,3 @@
+Hello from w+ mode! 🚀
+We can write and read in the same operation.
+This is pretty cool! 😎

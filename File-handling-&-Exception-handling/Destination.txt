@@ -1,0 +1,4 @@
+Hello! Welcome to Python file handling!
+This is line 2 of our sample file.
+Learning Python is fun and exciting!
+Keep practicing and you'll master it!

@@ -1,0 +1,28 @@
+student grade report
+====================
+write from file: grade.txt
+report generated: 2025-09-12 21:15:23
+
+Records:
+--------------------
+Total lines: 11
+Valid students: 6
+Invalid lines: 5
+-line 3:invalid format (expected "Name,Score")
+-line 5:(score is not a number) 
+-line 8: Name is Empty
+-line 9: Score 105.0 is outside 0-100
+
+Statistics
+Average Score: 61.08
+Highest: 88.0(frank)
+Lowest: 23.0(sam smith)
+
+
+Students (sorted by score desc)
+1) frank : 88.00
+2) charlie : 85.50
+3) smith : 77.00
+4) evan : 61.00
+5) alice : 32.00
+6) sam smith : 23.00

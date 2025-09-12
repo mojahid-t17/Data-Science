@@ -1,0 +1,6 @@
+Hello World!
+This is a new line created with Python.
+File writing is powerful!
+This line was appended!
+And so was this one!
+Append mode preserves existing content!
