@@ -1,0 +1,12 @@
+2025-09-16 01:44:32 - my-logger - DEBUG - this is from debug
+2025-09-16 01:44:32 - my-logger - INFO - this is from infor
+2025-09-16 01:44:32 - my-logger - ERROR - this is a error
+2025-09-16 01:46:20 - my-logger - DEBUG - this is from debug
+2025-09-16 01:46:20 - my-logger - INFO - this is from infor
+2025-09-16 01:46:20 - my-logger - ERROR - this is a error
+2025-09-16 01:46:24 - my-logger - DEBUG - this is from debug
+2025-09-16 01:46:24 - my-logger - DEBUG - this is from debug
+2025-09-16 01:46:24 - my-logger - INFO - this is from infor
+2025-09-16 01:46:24 - my-logger - INFO - this is from infor
+2025-09-16 01:46:24 - my-logger - ERROR - this is a error
+2025-09-16 01:46:24 - my-logger - ERROR - this is a error

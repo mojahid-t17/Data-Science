@@ -1,0 +1,6 @@
+2025-09-16 00:14:20- root- DEBUG - adding 10+22=32
+2025-09-16 00:14:20- root- DEBUG - subtructing 12-4=8
+2025-09-16 00:14:20- root- DEBUG - dividing 30/3=10.0
+2025-09-16 00:14:35- root- DEBUG - adding 10+22=32
+2025-09-16 00:14:35- root- DEBUG - subtructing 12-4=8
+2025-09-16 00:14:35- root- ERROR - division by zero error
