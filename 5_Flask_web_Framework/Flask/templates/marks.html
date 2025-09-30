@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Enter Marks for Subjects</h2>
+    <form action="/submit_marks" method="post">
+        <label for="math">Math:</label>
+        <input type="number" id="math" name="math" min="0" max="100" required><br><br>
+        <label for="physics">Physics:</label>
+        <input type="number" id="physics" name="physics" min="0" max="100" required><br><br>
+        <label for="english">English:</label>
+        <input type="number" id="english" name="english" min="0" max="100" required><br><br>
+        <label for="ict">ICT:</label>
+        <input type="number" id="ict" name="ict" min="0" max="100" required><br><br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
