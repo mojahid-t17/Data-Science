@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Price Predictor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .main-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            margin: 2rem auto;
+            padding: 2rem;
+            max-width: 800px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .header h1 {
+            color: #333;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-control, .form-select {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        
+        .btn-predict {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: white;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .btn-predict:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            color: white;
+        }
+        
+        .btn-predict:disabled {
+            opacity: 0.6;
+            transform: none;
+        }
+        
+        .result-container {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            display: none;
+        }
+        
+        .result-success {
+            background: linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%);
+            color: white;
+        }
+        
+        .result-error {
+            background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+            color: white;
+        }
+        
+        .result-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 1rem 0;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 1rem;
+        }
+        
+        .spinner-border {
+            color: #667eea;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .section-title {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .info-icon {
+            color: #667eea;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-container">
+            <div class="header">
+                <h1><i class="fas fa-mobile-alt info-icon"></i>Mobile Price Predictor</h1>
+                <p>Enter your mobile phone specifications to get an estimated price prediction</p>
+            </div>
+            
+            <form id="predictionForm">
+                <div class="feature-grid">
+                    <!-- Physical Specifications -->
+                    <div>
+                        <h5 class="section-title"><i class="fas fa-weight info-icon"></i>Physical Specifications</h5>
+                        
+                        <div class="form-group">
+                            <label for="weight_g" class="form-label">Weight (grams)</label>
+                            <input type="number" class="form-control" id="weight_g" name="weight_g" 
+                                   placeholder="e.g., 180" min="50" max="1000" step="0.1" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="battery" class="form-label">Battery Capacity (mAh)</label>
+                            <input type="number" class="form-control" id="battery" name="battery" 
+                                   placeholder="e.g., 4000" min="1000" max="10000" step="100" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Display Specifications -->
+                    <div>
+                        <h5 class="section-title"><i class="fas fa-tv info-icon"></i>Display Specifications</h5>
+                        
+                        <div class="form-group">
+                            <label for="display_type" class="form-label">Display Type</label>
+                            <select class="form-select" id="display_type" name="display_type" required>
+                                <option value="">Select Display Type</option>
+                                <option value="IPS">IPS</option>
+                                <option value="TFT">TFT</option>
+                                <option value="Capacitive">Capacitive</option>
+                                <option value="AMOLED">AMOLED</option>
+                                <option value="Super AMOLED">Super AMOLED</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="display_resolution" class="form-label">Display Resolution</label>
+                            <input type="number" class="form-control" id="display_resolution" name="display_resolution" 
+                                   placeholder="e.g., 5.5" min="3" max="15" step="0.1" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="display_size_ppi" class="form-label">Display Size PPI</label>
+                            <input type="number" class="form-control" id="display_size_ppi" name="display_size_ppi" 
+                                   placeholder="e.g., 300" min="100" max="600" step="1" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Connectivity & Storage -->
+                    <div>
+                        <h5 class="section-title"><i class="fas fa-wifi info-icon"></i>Connectivity & Storage</h5>
+                        
+                        <div class="form-group">
+                            <label for="SIM" class="form-label">SIM Type</label>
+                            <select class="form-select" id="SIM" name="SIM" required>
+                                <option value="">Select SIM Type</option>
+                                <option value="Single">Single SIM</option>
+                                <option value="Dual">Dual SIM</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="memory_card" class="form-label">Memory Card Support (GB)</label>
+                            <input type="number" class="form-control" id="memory_card" name="memory_card" 
+                                   placeholder="e.g., 256" min="0" max="1024" step="32" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="internal_memory_GB" class="form-label">Internal Memory (GB)</label>
+                            <input type="number" class="form-control" id="internal_memory_GB" name="internal_memory_GB" 
+                                   placeholder="e.g., 64" min="8" max="1024" step="8" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="RAM_GB" class="form-label">RAM (GB)</label>
+                            <input type="number" class="form-control" id="RAM_GB" name="RAM_GB" 
+                                   placeholder="e.g., 4" min="1" max="16" step="1" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Camera & Performance -->
+                    <div>
+                        <h5 class="section-title"><i class="fas fa-camera info-icon"></i>Camera & Performance</h5>
+                        
+                        <div class="form-group">
+                            <label for="primary_camera" class="form-label">Primary Camera (MP)</label>
+                            <input type="number" class="form-control" id="primary_camera" name="primary_camera" 
+                                   placeholder="e.g., 12" min="2" max="200" step="0.1" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="secondary_camera" class="form-label">Secondary Camera (MP)</label>
+                            <input type="number" class="form-control" id="secondary_camera" name="secondary_camera" 
+                                   placeholder="e.g., 8" min="0" max="100" step="0.1" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="CPU" class="form-label">CPU Type</label>
+                            <select class="form-select" id="CPU" name="CPU" required>
+                                <option value="">Select CPU Type</option>
+                                <option value="Dual-core">Dual-core</option>
+                                <option value="Quad-core">Quad-core</option>
+                                <option value="Hexa-core">Hexa-core</option>
+                                <option value="Octa-core">Octa-core</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="OS" class="form-label">Operating System</label>
+                            <select class="form-select" id="OS" name="OS" required>
+                                <option value="">Select OS</option>
+                                <option value="Ice Cream Sandwich">Ice Cream Sandwich</option>
+                                <option value="Jelly Bean">Jelly Bean</option>
+                                <option value="KitKat">KitKat</option>
+                                <option value="Lollipop">Lollipop</option>
+                                <option value="Marshmallow">Marshmallow</option>
+                                <option value="Nougat">Nougat</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-predict">
+                    <i class="fas fa-calculator"></i> Predict Price
+                </button>
+            </form>
+            
+            <div class="loading" id="loading">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-2">Processing your request...</p>
+            </div>
+            
+            <div class="result-container" id="resultContainer">
+                <div id="resultContent"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const formData = new FormData(form);
+            const loading = document.getElementById('loading');
+            const resultContainer = document.getElementById('resultContainer');
+            const resultContent = document.getElementById('resultContent');
+            const submitBtn = form.querySelector('button[type="submit"]');
+            
+            // Show loading state
+            loading.style.display = 'block';
+            resultContainer.style.display = 'none';
+            submitBtn.disabled = true;
+            
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                // Hide loading
+                loading.style.display = 'none';
+                
+                if (data.success) {
+                    resultContainer.className = 'result-container result-success';
+                    resultContent.innerHTML = `
+                        <h3><i class="fas fa-check-circle"></i> Price Prediction</h3>
+                        <div class="result-price">${data.predicted_price_formatted}</div>
+                        <p>Based on your specifications, the estimated price is <strong>${data.predicted_price_formatted}</strong></p>
+                    `;
+                } else {
+                    resultContainer.className = 'result-container result-error';
+                    resultContent.innerHTML = `
+                        <h3><i class="fas fa-exclamation-triangle"></i> Error</h3>
+                        <p>${data.error}</p>
+                    `;
+                }
+                
+                resultContainer.style.display = 'block';
+                
+            } catch (error) {
+                loading.style.display = 'none';
+                resultContainer.className = 'result-container result-error';
+                resultContent.innerHTML = `
+                    <h3><i class="fas fa-exclamation-triangle"></i> Error</h3>
+                    <p>An error occurred while processing your request. Please try again.</p>
+                `;
+                resultContainer.style.display = 'block';
+            } finally {
+                submitBtn.disabled = false;
+            }
+        });
+        
+        // Add some sample data buttons for testing
+        function fillSampleData() {
+            document.getElementById('weight_g').value = '180';
+            document.getElementById('SIM').value = 'Dual';
+            document.getElementById('display_type').value = 'IPS';
+            document.getElementById('display_resolution').value = '5.5';
+            document.getElementById('display_size_ppi').value = '300';
+            document.getElementById('OS').value = 'Marshmallow';
+            document.getElementById('CPU').value = 'Octa-core';
+            document.getElementById('memory_card').value = '256';
+            document.getElementById('internal_memory_GB').value = '64';
+            document.getElementById('RAM_GB').value = '4';
+            document.getElementById('primary_camera').value = '12';
+            document.getElementById('secondary_camera').value = '8';
+            document.getElementById('battery').value = '4000';
+        }
+        
+        // Add sample data button
+        const sampleBtn = document.createElement('button');
+        sampleBtn.type = 'button';
+        sampleBtn.className = 'btn btn-outline-secondary mt-2';
+        sampleBtn.innerHTML = '<i class="fas fa-magic"></i> Fill Sample Data';
+        sampleBtn.onclick = fillSampleData;
+        document.querySelector('.btn-predict').parentNode.appendChild(sampleBtn);
+    </script>
+</body>
+</html>
